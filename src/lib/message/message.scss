@@ -1,16 +1,16 @@
-$messageTop: 70px;
+$messageTop: 30px;
 
 .message {
   position: fixed;
   top: $messageTop;
   left: 50%;
   z-index: 9999;
-  padding: 10px 20px;
-  text-align: center;
+  min-width: 300px;
+  padding: 15px 30px;
   font-size: 18px;
   color: #f4f4f4;
   border-radius: 5px;
-  background: #4b4b4bf8;
+  background: #4b4b4bef;
   transform: translateX(-50%)
 }
 
