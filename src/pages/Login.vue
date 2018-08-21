@@ -36,6 +36,8 @@ export default {
     login () {
       user.login()
         .then()
+      // this.$router.replace('/answer')
+      this.$message('登录成功')
     }
   }
 }

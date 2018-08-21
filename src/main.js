@@ -3,8 +3,10 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import message from '@/lib/message/message.js'
 
 Vue.config.productionTip = false
+Vue.use(message)
 
 /* eslint-disable no-new */
 new Vue({

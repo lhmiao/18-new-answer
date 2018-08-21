@@ -1,0 +1,45 @@
+$messageTop: 70px;
+
+.message {
+  position: fixed;
+  top: $messageTop;
+  left: 50%;
+  z-index: 9999;
+  padding: 10px 20px;
+  text-align: center;
+  font-size: 18px;
+  color: #f4f4f4;
+  border-radius: 5px;
+  background: #4b4b4bf8;
+  transform: translateX(-50%)
+}
+
+@keyframes appear {
+  from {
+    top: 0;
+    opacity: 0;
+  }
+  to {
+    top: $messageTop;
+    opacity: 1;
+  }
+}
+
+@keyframes disappear {
+  from {
+    top: $messageTop;
+    opacity: 1;
+  }
+  to {
+    top: 0;
+    opacity: 0;
+  }
+}
+
+.appear {
+  animation: appear 0.5s;
+}
+
+.disappear {
+  animation: disappear 0.5s;
+}

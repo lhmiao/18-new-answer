@@ -17,6 +17,7 @@ export default {
 }
 
 body {
+  min-width: 1100px;
   font-family: "Microsoft YaHei","微软雅黑",Arial,sans-serif;
 }
 </style>
