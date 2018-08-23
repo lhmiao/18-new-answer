@@ -15,7 +15,7 @@
       <ul @click="changeType">
         <li data-value="product">产品</li>
         <li data-value="design">设计</li>
-        <li class="active" data-value="frontEnd">前端</li>
+        <li data-value="frontEnd">前端</li>
         <li data-value="backEnd">后台</li>
         <li data-value="Android">安卓</li>
         <li data-value="devops">DevOps</li>
@@ -33,11 +33,17 @@
           <button class="save" @click="save">保存</button>
         </div>
       </div>
+      <pagination :pageCount="pageCount" @current-change="handleCurrentChange"></pagination>
     </div>
   </div>
 </template>
 
 <script>
+// import User from '@/apis/User'
+import pagination from '@/components/Pagination'
+
+// const user = new User()
+
 export default {
   data () {
     return {
@@ -50,16 +56,30 @@ export default {
         {
           question: '产品-你对共享经济的未来发展的看法，现有的共享经济哪个做的比较好，如果你去做共享经济方面的策划，你会想要做一个什么样子的共享经济产品'
         }
-      ]
+      ],
+      activeType: null,
+      pageCount: 10
     }
   },
   methods: {
     changeType (e) {
-      console.log(e.target.dataset.value)
+      let target = e.target
+      // let type = target.dataset.value
+      if (this.activeType !== null) {
+        this.activeType.classList.toggle('active')
+      }
+      this.activeType = target
+      this.activeType.classList.toggle('active')
     },
     save () {
       this.$message('保存啦')
+    },
+    handleCurrentChange (pageNumber) {
+      this.$message('页码改变啦！现在页码是：' + pageNumber)
     }
+  },
+  components: {
+    pagination
   }
 }
 </script>
@@ -221,6 +241,10 @@ export default {
           outline: none;
         }
       }
+    }
+
+    .pagination {
+      margin: auto;
     }
   }
 }
