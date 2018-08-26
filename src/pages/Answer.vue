@@ -191,7 +191,7 @@ export default {
         &::before {
           content: attr(value);
           position: absolute;
-          top: -70px;
+          top: -55px;
           left: 50%;
           z-index: 1000;
           visibility: hidden;
@@ -203,13 +203,26 @@ export default {
           background: #4b4b4bd6;
           border-radius: 5px;
           transform: translateX(-50%);
-          transition: all 0.5s;
+          transition: all 0.3s;
           opacity: 0;
         }
 
-        &:hover::before {
+        &::after {
+          content: '';
+          position: absolute;
+          top: -15px;
+          left: 10px;
+          z-index: 1000;
+          visibility: hidden;
+          border: 5px solid transparent;
+          border-top: 10px solid #4b4b4bd6;
+          transition: all 0.3s;
+          opacity: 0;
+        }
+
+        &:hover::before,
+        &:hover::after {
           visibility: visible;
-          top: -50px;
           opacity: 1;
         }
 

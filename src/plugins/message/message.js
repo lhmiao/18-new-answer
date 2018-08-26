@@ -31,7 +31,7 @@ function message (msg) {
 
 function createMessage (msg) {
   let p = document.createElement('p')
-  p.innerText = msg
+  p.innerHTML = msg
   p.className = 'message'
   p.classList.add('appear')
   document.body.appendChild(p)
