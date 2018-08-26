@@ -22,7 +22,8 @@
       </ul>
     </div>
     <div class="answer-right">
-      <div class="item" v-for="item in items" :key="item.question">
+      <loading :message="activeType === null ? '请选择方向' : '加载中...'" v-if="loading"></loading>
+      <div class="item" v-for="item in items" :key="item.question" v-else>
         <p class="question">{{ item.question }}</p>
         <textarea placeholder="请将答案填入此处，或者上传附件"></textarea>
         <div class="commit">
@@ -41,12 +42,14 @@
 <script>
 // import User from '@/apis/User'
 import pagination from '@/components/Pagination'
+import loading from '@/components/Loading'
 
 // const user = new User()
 
 export default {
   data () {
     return {
+      loading: false,
       username: '杨家铖',
       userID: 2016123456789,
       items: [
@@ -72,14 +75,20 @@ export default {
       this.activeType.classList.toggle('active')
     },
     save () {
-      this.$message('保存啦')
+      this.$dialog('保存过啦', '这道题你已经保存过啦，再保存会覆盖之前的结果！是否继续？')
+        .then((res) => {
+          this.$message('保存啦')
+        })
+        .catch(() => {
+          this.$message('那就先不保存吧')
+        })
     },
     handleCurrentChange (pageNumber) {
       this.$message('页码改变啦！现在页码是：' + pageNumber)
     }
   },
   components: {
-    pagination
+    pagination, loading
   }
 }
 </script>
@@ -140,6 +149,14 @@ export default {
     flex: 1 1 auto;
     padding: 35px;
     background: #f9f9f9d4;
+
+    .loading {
+      height: calc( 100% - 60px );
+      margin-bottom: 20px;
+      font-size: 40px;
+      border-radius: 10px;
+      background: #fefefee8;
+    }
 
     .item {
       margin-bottom: 15px;

@@ -1,0 +1,127 @@
+.dialog-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  width: 100vw;
+  height: 100vh;
+  background: #80808075;
+
+  .dialog-box {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 9999;
+    width: 420px;
+    padding: 20px;
+    border-radius: 4px;
+    background: white;
+    transform: translate(-50%, -50%);
+  
+    header {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      
+      .dialog-title {
+        font-size: 18px;
+        color: #303133;
+      }
+  
+      .dialog-box-close {
+        color: #606266;
+        cursor: pointer;
+  
+        &:hover {
+          color: #52c41a;
+        }
+      }
+    }
+  
+    main {
+      margin-bottom: 10px;
+  
+      .dialog-question {
+        font-size: 14px;
+        color: #606266;
+      }
+    }
+  
+    footer {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: flex-end;
+      align-items: center;
+  
+      button {
+        padding: 7px 18px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+  
+        &:focus {
+          outline: none;
+        }
+      }
+  
+      .dialog-confirm {
+        margin-right: 10px;
+        color: #38f;
+        border: 1px solid #38f;
+        background: white;
+        transition: all 0.2s;
+  
+        &:hover {
+          color: white;
+          background: #38f;
+        }
+      }
+  
+      .dialog-cancel {
+        border: 1px solid #52c41a;
+        color: #52c41a;
+        background: white;
+        transition: all 0.2s;
+  
+        &:hover {
+          color: white;
+          background: #52c41a;
+        }
+      }
+    }
+  }
+
+  @keyframes dialog-appear {
+    from {
+      top: 49%;
+      opacity: 0;
+    }
+    to {
+      top: 50%;
+      opacity: 1;
+    }
+  }
+
+  @keyframes dialog-disappear {
+    from {
+      top: 50%;
+      opacity: 1;
+    }
+    to {
+      top: 49%;
+      opacity: 0;
+    }
+  }
+
+  .dialog-appear {
+    animation: dialog-appear 0.2s;
+  }
+
+  .dialog-disappear {
+    animation: dialog-disappear 0.2s;
+  }
+}
+
+

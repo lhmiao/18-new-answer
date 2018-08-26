@@ -14,7 +14,7 @@ $messageTop: 30px;
   transform: translateX(-50%)
 }
 
-@keyframes appear {
+@keyframes message-appear {
   from {
     top: 0;
     opacity: 0;
@@ -25,7 +25,7 @@ $messageTop: 30px;
   }
 }
 
-@keyframes disappear {
+@keyframes message-disappear {
   from {
     top: $messageTop;
     opacity: 1;
@@ -36,10 +36,10 @@ $messageTop: 30px;
   }
 }
 
-.appear {
-  animation: appear 0.5s;
+.message-appear {
+  animation: message-appear 0.3s;
 }
 
-.disappear {
-  animation: disappear 0.5s;
+.message-disappear {
+  animation: message-disappear 0.3s;
 }
