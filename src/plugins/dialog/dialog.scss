@@ -26,9 +26,10 @@ $btnBlue: #38f;
       flex-flow: row nowrap;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 15px;
+      margin-bottom: 20px;
       
       .dialog-title {
+        line-height: 24px;
         font-size: 18px;
         color: #303133;
       }
@@ -44,10 +45,11 @@ $btnBlue: #38f;
     }
   
     main {
-      margin-bottom: 15px;
+      margin-bottom: 20px;
   
       .dialog-question {
         font-size: 14px;
+        line-height: 20px;
         color: #606266;
       }
     }
@@ -59,7 +61,9 @@ $btnBlue: #38f;
       align-items: center;
   
       button {
-        padding: 7px 18px;
+        padding: 8px 18px;
+        font-size: 14px;
+        line-height: 16px;
         border: none;
         border-radius: 4px;
         cursor: pointer;
@@ -98,7 +102,7 @@ $btnBlue: #38f;
 
   @keyframes dialog-appear {
     from {
-      top: 49%;
+      top: 48%;
       opacity: 0;
     }
     to {
@@ -113,7 +117,7 @@ $btnBlue: #38f;
       opacity: 1;
     }
     to {
-      top: 49%;
+      top: 48%;
       opacity: 0;
     }
   }
