@@ -34,10 +34,30 @@ export default {
   },
   methods: {
     login () {
-      user.login()
-        .then()
-      this.$router.replace('/answer')
-      this.$message('登录成功')
+      if (this.username === '') {
+        this.$message('请输入账号')
+        return
+      } else if (this.password === '') {
+        this.$message('请输入密码')
+        return
+      }
+      const data = {
+        studentId: this.username,
+        password: this.password
+      }
+      user.login(data)
+        .then(res => {
+          const studentInfo = {
+            studentId: res.studentId,
+            name: res.name
+          }
+          localStorage.studentInfo = JSON.stringify(studentInfo)
+          this.$router.push('/answer')
+          this.$message('登录成功')
+        })
+        .catch(err => {
+          this.$message('登录失败，系统提示：' + err.errMsg)
+        })
     }
   }
 }

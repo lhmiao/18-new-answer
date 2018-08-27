@@ -17,15 +17,18 @@
         <li data-value="design">设计</li>
         <li data-value="frontEnd">前端</li>
         <li data-value="backEnd">后台</li>
-        <li data-value="Android">安卓</li>
-        <li data-value="devops">DevOps</li>
+        <li data-value="android">安卓</li>
+        <li data-value="devOps">DevOps</li>
       </ul>
     </div>
     <div class="answer-right">
-      <loading :message="activeType ? '请选择方向' : '加载中...'" v-if="loading"></loading>
+      <loading :message="activeType === null ? '请选择方向' : '加载中...'" v-if="loading"></loading>
       <div class="item" v-for="(item, index) in items" :key="item.question" v-else>
-        <p class="question">{{ item.question }}</p>
-        <textarea placeholder="请将答案填入此处，或者上传附件" v-model="answers[index]"></textarea>
+        <p class="question">{{item.id}}. {{ item.question }} ({{ item.toward }})</p>
+        <div class="question-img">
+          <img :src="item.questionImages">
+        </div>
+        <textarea placeholder="请将答案填入此处，或者上传附件（二选一，都做则将附件作为答案）" v-model="texts[index]"></textarea>
         <div class="commit">
           <label class="upload" :value="fileNames[index] ? fileNames[index] : '当前尚未上传附件'">
             上传附件
@@ -40,18 +43,20 @@
 </template>
 
 <script>
-// import User from '@/apis/User'
+import User from '@/apis/User'
+import towardCode from '@/constants/towardCode'
 import pagination from '@/components/Pagination'
 import loading from '@/components/Loading'
 
-// const user = new User()
+const user = new User()
 
 export default {
   data () {
     return {
-      loading: false,
+      loading: true,
       username: '杨家铖',
       userID: 2016123456789,
+      toward: '',
       items: [
         {
           question: '设计-简述调整效果-黑白，和调整效果-阈值的区别'
@@ -60,22 +65,24 @@ export default {
           question: '产品-你对共享经济的未来发展的看法，现有的共享经济哪个做的比较好，如果你去做共享经济方面的策划，你会想要做一个什么样子的共享经济产品'
         }
       ],
-      answers: [],
+      texts: [],
       files: [],
       fileNames: [],
       activeType: null,
-      pageCount: 10
+      pageCount: 1
     }
   },
   methods: {
     changeType (e) {
       let target = e.target
-      // let type = target.dataset.value
+      let type = target.dataset.value
+      this.toward = towardCode[type]
       if (this.activeType !== null) {
         this.activeType.classList.toggle('active')
       }
       this.activeType = target
       this.activeType.classList.toggle('active')
+      this.getTimuList(this.toward)
     },
     getFile (index, e) {
       let file = e.target.files[0]
@@ -85,21 +92,80 @@ export default {
       this.fileNames = newFileNames
     },
     save (index) {
-      console.log(this.answers[index], this.files[index])
-      this.$dialog('保存过啦', '这道题你已经保存过啦，再保存会覆盖之前的结果！是否继续？')
-        .then((res) => {
-          this.$message('保存啦')
-        })
-        .catch(() => {
-          this.$message('那就先不保存吧')
-        })
+      let text = this.texts[index]
+      let file = this.files[index]
+      if (text === undefined && file === undefined) {
+        this.$message('请先输入答案或上传附件')
+        return
+      }
+      let answer = file || text
+      let type = typeof answer === 'string' ? 'string' : 'file'
+      const data = {
+        id: index,
+        answer,
+        type
+      }
+      if (this.items[index].answer !== null) {
+        this.$dialog('改题已保存', '这道题你已经保存过啦，再保存会覆盖之前的结果！是否继续？')
+          .then(res => {
+            return user.submitAnswer(data)
+          })
+          .then(res => {
+            this.$message('保存成功')
+          })
+          .catch(err => {
+            if (typeof err === 'string') {
+              this.$message('取消保存')
+            } else {
+              this.$message('错误，系统提示：' + err.errMsg)
+            }
+          })
+      } else {
+        user.submitAnswer(data)
+          .then(res => {
+            this.$message('保存成功')
+          })
+          .catch(err => {
+            this.$message('错误，系统提示：' + err.errMsg)
+          })
+      }
     },
     handleCurrentChange (pageNumber) {
-      this.$message('页码改变啦！现在页码是：' + pageNumber)
+      this.getTimuList(this.toward, pageNumber)
+    },
+    getTimuList (toward, page = 1) {
+      const data = {
+        toward,
+        page
+      }
+      user.getTimuList(data)
+        .then(res => {
+          this.pageCount = res.pageSum
+          if (res.list.length === 0) {
+            this.$message('题目暂时还没出好')
+            return
+          }
+          this.items = res.list.sort((pre, next) => {
+            return pre.id - next.id
+          })
+        })
+        .catch(err => {
+          if (err.errCode === 110) {
+            this.$message('请先登录')
+            this.$router.replace('/login')
+          } else {
+            this.$message('错误，系统提示：' + err.errMsg)
+          }
+        })
     }
   },
   components: {
     pagination, loading
+  },
+  mounted () {
+    const studentInfo = JSON.parse(localStorage.studentInfo)
+    this.username = studentInfo.name
+    this.userID = studentInfo.studentId
   }
 }
 </script>
@@ -179,6 +245,11 @@ export default {
       .question {
         margin-bottom: 20px;
         font-size: 18px;
+      }
+
+      .question-img {
+        margin-bottom: 20px;
+        text-align: center;
       }
 
       textarea {

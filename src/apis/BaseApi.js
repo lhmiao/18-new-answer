@@ -2,7 +2,7 @@ import axios from 'axios'
 import qs from 'qs'
 
 const clientConfig = {
-  baseURL: '',
+  baseURL: '/api',
   timeout: 10000
 }
 
@@ -15,8 +15,12 @@ export default class BaseApi {
     let axiosClient = axios.create(clientConfig)
     axiosClient.interceptors.response.use(
       res => {
-        if (res.data.sc !== 200) {
-          return Promise.reject(res.data.msg)
+        if (res.data.errorCode !== 0) {
+          const err = {
+            errCode: res.data.errorCode,
+            errMsg: res.data.errorMsg
+          }
+          return Promise.reject(err)
         }
         return res.data
       },
@@ -38,7 +42,7 @@ export default class BaseApi {
     return this.request(option)
   }
 
-  post (url, data = {}, type = 'json') {
+  post (url, data = {}, type = 'form-data') {
     const option = {
       url,
       method: 'post',

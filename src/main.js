@@ -10,6 +10,20 @@ Vue.config.productionTip = false
 Vue.use(message)
 Vue.use(dialog)
 
+const unrequireAuthPath = ['/login']
+router.beforeEach((to, from, next) => {
+  if (unrequireAuthPath.includes(to.path)) {
+    next()
+  } else {
+    if (localStorage.studentInfo) {
+      next()
+    } else {
+      router.app.$message('请先登录')
+      next('/login')
+    }
+  }
+})
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
