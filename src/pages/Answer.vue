@@ -22,9 +22,9 @@
       </ul>
     </div>
     <div class="answer-right">
-      <loading :message="activeType === null ? '请选择方向' : '加载中...'" v-if="loading"></loading>
+      <loading :message="loadingMsg" v-if="loading"></loading>
       <div class="item" v-for="(item, index) in items" :key="item.question" v-else>
-        <p class="question">{{item.id}}. {{ item.question }} ({{ item.toward }})</p>
+        <p class="question">{{item.id}}. {{ item.toward }}-{{ item.question }} </p>
         <div class="question-img">
           <img :src="item.questionImages">
         </div>
@@ -54,15 +54,20 @@ export default {
   data () {
     return {
       loading: true,
+      loadingMsg: '请选择方向',
       username: '杨家铖',
       userID: 2016123456789,
       toward: '',
       items: [
         {
-          question: '设计-简述调整效果-黑白，和调整效果-阈值的区别'
+          id: 1,
+          toward: '设计',
+          question: '简述调整效果-黑白，和调整效果-阈值的区别'
         },
         {
-          question: '产品-你对共享经济的未来发展的看法，现有的共享经济哪个做的比较好，如果你去做共享经济方面的策划，你会想要做一个什么样子的共享经济产品'
+          id: 2,
+          toward: '产品',
+          question: '你对共享经济的未来发展的看法，现有的共享经济哪个做的比较好，如果你去做共享经济方面的策划，你会想要做一个什么样子的共享经济产品'
         }
       ],
       texts: [],
@@ -134,15 +139,18 @@ export default {
       this.getTimuList(this.toward, pageNumber)
     },
     getTimuList (toward, page = 1) {
+      this.loading = true
+      this.loadingMsg = '加载中'
       const data = {
         toward,
         page
       }
       user.getTimuList(data)
         .then(res => {
+          this.loading = false
           this.pageCount = res.pageSum
           if (res.list.length === 0) {
-            this.$message('题目暂时还没出好')
+            this.$message('题目暂时还没出好，以下是测试数据')
             return
           }
           this.items = res.list.sort((pre, next) => {
@@ -154,6 +162,7 @@ export default {
             this.$message('请先登录')
             this.$router.replace('/login')
           } else {
+            this.loadingMsg = '加载失败，请刷新重试'
             this.$message('错误，系统提示：' + err.errMsg)
           }
         })
@@ -176,7 +185,7 @@ export default {
   flex-flow: row nowrap;
   align-items: stretch;
   width: 1480px;
-  min-height: 950px;
+  min-height: 1070px;
   margin: 70px auto 55px auto;
   box-shadow: 0px 11px 39px 4px rgba(50, 51, 52, 0.28);
 
@@ -228,7 +237,7 @@ export default {
     background: rgba(249, 249, 249, 0.831);
 
     .loading {
-      height: calc( 100% - 60px );
+      height: 945px;
       margin-bottom: 20px;
       font-size: 40px;
       border-radius: 10px;
@@ -250,6 +259,7 @@ export default {
       .question-img {
         margin-bottom: 20px;
         text-align: center;
+        font-size: 0;
       }
 
       textarea {
