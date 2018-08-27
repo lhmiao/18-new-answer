@@ -1,3 +1,6 @@
+$btnGreen: #52c41a;
+$btnBlue: #38f;
+
 .dialog-container {
   position: fixed;
   top: 0;
@@ -5,7 +8,7 @@
   z-index: 9999;
   width: 100vw;
   height: 100vh;
-  background: #80808075;
+  background: rgba(128, 128, 128, 0.459);
 
   .dialog-box {
     position: fixed;
@@ -35,7 +38,7 @@
         cursor: pointer;
   
         &:hover {
-          color: #52c41a;
+          color: $btnGreen;
         }
       }
     }
@@ -68,26 +71,26 @@
   
       .dialog-confirm {
         margin-right: 10px;
-        color: #38f;
-        border: 1px solid #38f;
+        color: $btnBlue;
+        border: 1px solid $btnBlue;
         background: white;
         transition: all 0.2s;
   
         &:hover {
           color: white;
-          background: #38f;
+          background: $btnBlue;
         }
       }
   
       .dialog-cancel {
-        border: 1px solid #52c41a;
-        color: #52c41a;
+        border: 1px solid $btnGreen;
+        color: $btnGreen;
         background: white;
         transition: all 0.2s;
   
         &:hover {
           color: white;
-          background: #52c41a;
+          background: $btnGreen;
         }
       }
     }

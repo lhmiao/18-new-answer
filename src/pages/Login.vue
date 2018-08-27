@@ -49,7 +49,7 @@ export default {
   margin: 200px auto 0 auto;
   padding: 60px;
   box-shadow: 7px 8px 39px 4px rgba(50, 51, 52, 0.66);
-  background: #f9f9f9d4;
+  background: rgba(249, 249, 249, 0.831);
   border-radius: 20px;
 
   .title {
@@ -112,7 +112,7 @@ footer {
   left: 0;
   bottom: 0;
   width: 100%;
-  background: #f3f3f3a3;
+  background: rgba(243, 243, 243, 0.639);
   box-shadow: inset 9px 10px 18px 0px rgba(6, 0, 1, 0.27);
 
   p {

@@ -116,7 +116,7 @@ export default {
 
   .answer-left {
     flex: 0 0 310px;
-    background: #4b4b4bd6;
+    background: rgba(75, 75, 75, 0.839);
     text-align: center;
     color: #f4f4f4;
 
@@ -150,7 +150,7 @@ export default {
       }
 
       .active {
-        color: #4b4b4bd6;
+        color: rgba(75, 75, 75, 0.839);
         background: #f4f4f4;
       }
     }
@@ -159,21 +159,21 @@ export default {
   .answer-right {
     flex: 1 1 auto;
     padding: 35px;
-    background: #f9f9f9d4;
+    background: rgba(249, 249, 249, 0.831);
 
     .loading {
       height: calc( 100% - 60px );
       margin-bottom: 20px;
       font-size: 40px;
       border-radius: 10px;
-      background: #fefefee8;
+      background: rgba(254, 254, 254, 0.91);
     }
 
     .item {
       margin-bottom: 15px;
       padding: 35px;
       font-size: 18px;
-      background: #fefefee8;
+      background: rgba(254, 254, 254, 0.91);
       border-radius: 10px;
 
       .question {
@@ -230,7 +230,7 @@ export default {
           line-height: 20px;
           color: #f4f4f4;
           white-space: nowrap;
-          background: #4b4b4bd6;
+          background: rgba(75, 75, 75, 0.839);
           border-radius: 5px;
           transform: translateX(-50%);
           transition: all 0.3s;
@@ -245,7 +245,7 @@ export default {
           z-index: 1000;
           visibility: hidden;
           border: 5px solid transparent;
-          border-top: 10px solid #4b4b4bd6;
+          border-top: 10px solid rgba(75, 75, 75, 0.839);
           transition: all 0.3s;
           opacity: 0;
         }
