@@ -200,11 +200,11 @@ export default {
       label {
         position: relative;
         display: inline-block;
-        width: 135px;
+        width: 133px;
         height: 33px;
         margin-right: 10px;
+        line-height: 33px;
         vertical-align: top;
-        line-height: 35px;
         text-align: center;
         color: #096dd9;
         border: 1px solid #096dd9;
@@ -257,9 +257,7 @@ export default {
         }
 
         input {
-          width: 0;
-          height: 0;
-          overflow: hidden;
+          display: none;
         }
       }
 
