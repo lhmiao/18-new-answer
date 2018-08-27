@@ -22,16 +22,16 @@
       </ul>
     </div>
     <div class="answer-right">
-      <loading :message="activeType === null ? '请选择方向' : '加载中...'" v-if="loading"></loading>
-      <div class="item" v-for="item in items" :key="item.question" v-else>
+      <loading :message="activeType ? '请选择方向' : '加载中...'" v-if="loading"></loading>
+      <div class="item" v-for="(item, index) in items" :key="item.question" v-else>
         <p class="question">{{ item.question }}</p>
-        <textarea placeholder="请将答案填入此处，或者上传附件"></textarea>
+        <textarea placeholder="请将答案填入此处，或者上传附件" v-model="answers[index]"></textarea>
         <div class="commit">
-          <label class="upload" value="当前未上传附件">
+          <label class="upload" :value="fileNames[index] ? fileNames[index] : '当前尚未上传附件'">
             上传附件
-            <input type="file">
+            <input type="file" @change="getFile(index, $event)">
           </label>
-          <button class="save" @click="save">保存</button>
+          <button class="save" @click="save(index)">保存</button>
         </div>
       </div>
       <pagination :pageCount="pageCount" @current-change="handleCurrentChange"></pagination>
@@ -60,6 +60,9 @@ export default {
           question: '产品-你对共享经济的未来发展的看法，现有的共享经济哪个做的比较好，如果你去做共享经济方面的策划，你会想要做一个什么样子的共享经济产品'
         }
       ],
+      answers: [],
+      files: [],
+      fileNames: [],
       activeType: null,
       pageCount: 10
     }
@@ -74,7 +77,15 @@ export default {
       this.activeType = target
       this.activeType.classList.toggle('active')
     },
-    save () {
+    getFile (index, e) {
+      let file = e.target.files[0]
+      this.files[index] = file
+      let newFileNames = [...this.fileNames]
+      newFileNames[index] = file.name
+      this.fileNames = newFileNames
+    },
+    save (index) {
+      console.log(this.answers[index], this.files[index])
       this.$dialog('保存过啦', '这道题你已经保存过啦，再保存会覆盖之前的结果！是否继续？')
         .then((res) => {
           this.$message('保存啦')
@@ -176,6 +187,7 @@ export default {
         margin-bottom: 20px;
         padding: 20px;
         font-size: 18px;
+        font-family: 'MicrosoftYaHeiUI';
         border: 1px solid #a4a4a4;
         border-radius: 10px;
         resize: none;
@@ -217,6 +229,7 @@ export default {
           font-size: 16px;
           line-height: 20px;
           color: #f4f4f4;
+          white-space: nowrap;
           background: #4b4b4bd6;
           border-radius: 5px;
           transform: translateX(-50%);
