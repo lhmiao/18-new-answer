@@ -28,7 +28,7 @@
         <div class="question-img">
           <img :src="item.questionImages">
         </div>
-        <textarea placeholder="请将答案填入此处，或者上传附件（二选一，都做则将附件作为答案）" v-model="texts[index]"></textarea>
+        <textarea :placeholder="getPlaceHolder(index)" v-model="texts[index]"></textarea>
         <div class="commit">
           <label class="upload" :for="item.id" :value="fileNames[index] || '当前尚未上传附件'">
             上传附件
@@ -93,6 +93,18 @@ export default {
       this.activeType = target
       this.activeType.classList.toggle('active')
       this.getTimuList(this.toward)
+    },
+    getPlaceHolder (index) {
+      const answer = this.items[index].answer
+      if (answer === null) {
+        return '请将答案填入此处，或者上传附件（二选一，都做则将附件做为最终结果）'
+      } else {
+        if (answer.type === 'text') {
+          return '该题完成（提交的是答案），可再次提交覆盖之前的结果'
+        } else {
+          return '该题完成（提交的是附件），可再次提交覆盖之前的结果'
+        }
+      }
     },
     getFile (index, e) {
       let file = e.target.files[0]
@@ -161,6 +173,9 @@ export default {
           this.items = res.list.sort((pre, next) => {
             return pre.id - next.id
           })
+          this.texts = []
+          this.files = []
+          this.fileNames = []
         })
         .catch(err => {
           if (err.errCode === 110) {
