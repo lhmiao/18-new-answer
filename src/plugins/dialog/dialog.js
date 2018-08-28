@@ -1,6 +1,6 @@
 import './dialog.scss'
 
-function dialog (title, question) {
+function dialog (title = '标题', question) {
   let dialogContainer = creatDialogContainer(title, question)
   let dialogBox = dialogContainer.querySelector('.dialog-box')
   dialogBox.classList.add('dialog-appear')
@@ -13,7 +13,11 @@ function dialog (title, question) {
       if (targetClass === 'dialog-confirm') {
         resolve('confirm')
       } else if (cancelClassList.includes(targetClass)) {
-        reject(new Error('cancel'))
+        const err = {
+          errCode: 0,
+          errMsg: 'cancel'
+        }
+        reject(err)
       } else {
         return
       }

@@ -30,10 +30,10 @@
         </div>
         <textarea placeholder="请将答案填入此处，或者上传附件（二选一，都做则将附件作为答案）" v-model="texts[index]"></textarea>
         <div class="commit">
-          <label class="upload" :value="fileNames[index] ? fileNames[index] : '当前尚未上传附件'">
+          <label class="upload" :for="item.id" :value="fileNames[index] || '当前尚未上传附件'">
             上传附件
-            <input type="file" @change="getFile(index, $event)">
           </label>
+          <input type="file" :id="item.id" @change="getFile(index, $event)">
           <button class="save" @click="save(index)">保存</button>
         </div>
       </div>
@@ -62,12 +62,17 @@ export default {
         {
           id: 1,
           toward: '设计',
-          question: '简述调整效果-黑白，和调整效果-阈值的区别'
+          question: '简述调整效果-黑白，和调整效果-阈值的区别',
+          answer: null
         },
         {
           id: 2,
           toward: '产品',
-          question: '你对共享经济的未来发展的看法，现有的共享经济哪个做的比较好，如果你去做共享经济方面的策划，你会想要做一个什么样子的共享经济产品'
+          question: '你对共享经济的未来发展的看法，现有的共享经济哪个做的比较好，如果你去做共享经济方面的策划，你会想要做一个什么样子的共享经济产品',
+          answer: {
+            type: 'text',
+            answer: '这是答案'
+          }
         }
       ],
       texts: [],
@@ -119,7 +124,7 @@ export default {
             this.$message('保存成功')
           })
           .catch(err => {
-            if (typeof err === 'string') {
+            if (err.errMsg === 'cancel') {
               this.$message('取消保存')
             } else {
               this.$message('错误，系统提示：' + err.errMsg)
@@ -336,10 +341,10 @@ export default {
           visibility: visible;
           opacity: 1;
         }
+      }
 
-        input {
+      input {
           display: none;
-        }
       }
 
       button {
