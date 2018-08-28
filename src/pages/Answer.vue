@@ -128,7 +128,7 @@ export default {
         type
       }
       if (this.items[index].answer !== null) {
-        this.$dialog('改题已保存', '这道题你已经保存过啦，再保存会覆盖之前的结果！是否继续？')
+        this.$dialog('该题已保存', '这道题你已经保存过啦，再保存会覆盖之前的结果！是否继续？')
           .then(res => {
             return user.submitAnswer(data)
           })
