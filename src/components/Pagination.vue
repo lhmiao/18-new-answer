@@ -56,7 +56,6 @@ export default {
     },
     currentChange (pageNumber) {
       if (this.currentPage === pageNumber) {
-        this.$message('到头啦！别点啦！')
         return
       }
       this.currentPage = pageNumber

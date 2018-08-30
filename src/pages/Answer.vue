@@ -116,7 +116,7 @@ export default {
     save (index) {
       let text = this.texts[index]
       let file = this.files[index]
-      if (text === undefined && file === undefined) {
+      if (!(text || file)) {
         this.$message('请先输入答案或上传附件')
         return
       }
@@ -136,8 +136,8 @@ export default {
             this.$message('保存成功')
           })
           .catch(err => {
-            if (err.errMsg === 'cancel') {
-              this.$message('取消保存')
+            if (err.errCode === 0) {
+              this.$message('取消本次保存')
             } else {
               this.$message('错误，系统提示：' + err.errMsg)
             }
@@ -204,13 +204,14 @@ export default {
   display: flex;
   flex-flow: row nowrap;
   align-items: stretch;
-  width: 1480px;
+  width: 78%;
+  min-width: 1100px;
   min-height: 1070px;
   margin: 70px auto 55px auto;
   box-shadow: 0px 11px 39px 4px rgba(50, 51, 52, 0.28);
 
   .answer-left {
-    flex: 0 0 310px;
+    flex: 0 1 310px;
     background: rgba(75, 75, 75, 0.839);
     text-align: center;
     color: #f4f4f4;
@@ -252,7 +253,7 @@ export default {
   }
 
   .answer-right {
-    flex: 1 1 auto;
+    flex: 1 2 auto;
     padding: 35px;
     background: rgba(249, 249, 249, 0.831);
 

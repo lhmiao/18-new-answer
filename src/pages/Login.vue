@@ -65,16 +65,20 @@ export default {
 
 <style lang="scss" scoped>
 .login-form {
+  position: fixed;
+  top: 50%;
+  left: 50%;
   width: 685px;
-  margin: 200px auto 0 auto;
   padding: 60px;
   box-shadow: 7px 8px 39px 4px rgba(50, 51, 52, 0.66);
   background: rgba(249, 249, 249, 0.831);
   border-radius: 20px;
+  transform: translate(-50%, -50%);
 
   .title {
     margin-bottom: 35px;
     font-size: 30px;
+    line-height: 40px;
     font-weight: bold;
     color: #535353;
   }
@@ -107,6 +111,7 @@ export default {
 
   .tip {
     font-size: 16px;
+    line-height: 21px;
     color: #535353;
     margin-bottom: 20px;
   }
@@ -136,7 +141,7 @@ footer {
   box-shadow: inset 9px 10px 18px 0px rgba(6, 0, 1, 0.27);
 
   p {
-    margin: 20px 0;
+    margin: 10px 0;
     text-align: center;
     font-size: 18px;
     color: #3c3c3c;
