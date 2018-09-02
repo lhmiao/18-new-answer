@@ -100,9 +100,9 @@ export default {
         return '请将答案填入此处，或者上传附件（二选一，都做则将附件做为最终结果）'
       } else {
         if (answer.type === 'text') {
-          return '该题完成（提交的是答案），可再次提交覆盖之前的结果'
+          return '该题已完成（提交的是文字），可再次提交覆盖之前的结果'
         } else {
-          return '该题完成（提交的是附件），可再次提交覆盖之前的结果'
+          return '该题已完成（提交的是附件），可再次提交覆盖之前的结果'
         }
       }
     },
@@ -121,9 +121,10 @@ export default {
         return
       }
       let answer = file || text
-      let type = typeof answer === 'string' ? 'string' : 'file'
+      let type = typeof answer === 'string' ? 'text' : 'file'
+      let id = this.items[index].id
       const data = {
-        id: index,
+        id,
         answer,
         type
       }
@@ -258,7 +259,7 @@ export default {
     background: rgba(249, 249, 249, 0.831);
 
     .loading {
-      height: 945px;
+      height: 922px;
       margin-bottom: 20px;
       font-size: 40px;
       border-radius: 10px;
