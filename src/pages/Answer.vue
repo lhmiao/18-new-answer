@@ -140,7 +140,7 @@ export default {
             if (err.errCode === 0) {
               this.$message('取消本次保存')
             } else {
-              this.$message('错误，系统提示：' + err.errMsg)
+              this.$message('错误，系统提示：' + (err.errMsg || err))
             }
           })
       } else {
@@ -149,7 +149,7 @@ export default {
             this.$message('保存成功')
           })
           .catch(err => {
-            this.$message('错误，系统提示：' + err.errMsg)
+            this.$message('错误，系统提示：' + (err.errMsg || err))
           })
       }
     },
@@ -184,7 +184,7 @@ export default {
             this.$router.replace('/login')
           } else {
             this.loadingMsg = '加载失败，请刷新重试'
-            this.$message('错误，系统提示：' + err.errMsg)
+            this.$message('错误，系统提示：' + (err.errMsg || err))
           }
         })
     }

@@ -56,7 +56,7 @@ export default {
           this.$message('登录成功')
         })
         .catch(err => {
-          this.$message('登录失败，系统提示：' + err.errMsg)
+          this.$message('登录失败，系统提示：' + (err.errMsg || err))
         })
     }
   }
@@ -68,17 +68,17 @@ export default {
   position: fixed;
   top: 50%;
   left: 50%;
-  width: 685px;
-  padding: 60px;
+  width: 550px;
+  padding: 45px;
   box-shadow: 7px 8px 39px 4px rgba(50, 51, 52, 0.66);
   background: rgba(249, 249, 249, 0.831);
   border-radius: 20px;
   transform: translate(-50%, -50%);
 
   .title {
-    margin-bottom: 35px;
+    margin-bottom: 25px;
     font-size: 30px;
-    line-height: 40px;
+    line-height: 30px;
     font-weight: bold;
     color: #535353;
   }
@@ -87,9 +87,9 @@ export default {
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
-    margin-bottom: 30px;
+    margin-bottom: 28px;
     width: 100%;
-    height: 60px;
+    height: 50px;
     background: white;
     box-shadow: inset 1px 2px 0px 0px rgba(6, 0, 1, 0.24);
 
@@ -110,7 +110,6 @@ export default {
   }
 
   .tip {
-    font-size: 16px;
     line-height: 21px;
     color: #535353;
     margin-bottom: 20px;
@@ -118,7 +117,7 @@ export default {
 
   button {
     width: 100%;
-    height: 60px;
+    height: 54px;
     font-size: 30px;
     font-weight: bold;
     color: white;
