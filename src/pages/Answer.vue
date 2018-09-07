@@ -109,9 +109,7 @@ export default {
     getFile (index, e) {
       let file = e.target.files[0]
       this.files[index] = file
-      let newFileNames = [...this.fileNames]
-      newFileNames[index] = file.name
-      this.fileNames = newFileNames
+      this.$set(this.fileNames, index, file.name)
     },
     save (index) {
       let text = this.texts[index]
@@ -140,7 +138,7 @@ export default {
             if (err.errCode === 0) {
               this.$message('取消本次保存')
             } else {
-              this.$message('错误，系统提示：' + (err.errMsg || err))
+              this.$message('错误，系统提示：' + err)
             }
           })
       } else {
@@ -149,7 +147,7 @@ export default {
             this.$message('保存成功')
           })
           .catch(err => {
-            this.$message('错误，系统提示：' + (err.errMsg || err))
+            this.$message('错误，系统提示：' + err)
           })
       }
     },
@@ -184,7 +182,7 @@ export default {
             this.$router.replace('/login')
           } else {
             this.loadingMsg = '加载失败，请刷新重试'
-            this.$message('错误，系统提示：' + (err.errMsg || err))
+            this.$message('错误，系统提示：' + err)
           }
         })
     }

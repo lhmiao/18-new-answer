@@ -18,7 +18,10 @@ export default class BaseApi {
         if (res.data.errorCode !== 0) {
           const err = {
             errCode: res.data.errorCode,
-            errMsg: res.data.errorMsg
+            errMsg: res.data.errorMsg,
+            toString () {
+              return this.errMsg
+            }
           }
           return Promise.reject(err)
         }

@@ -56,7 +56,7 @@ export default {
           this.$message('登录成功')
         })
         .catch(err => {
-          this.$message('登录失败，系统提示：' + (err.errMsg || err))
+          this.$message('登录失败，系统提示：' + err)
         })
     }
   }

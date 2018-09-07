@@ -32,12 +32,25 @@ export default {
 
     h1 {
       font-size: 200px;
-      color: rgba(42, 40, 40, 0.788);
+      color: transparent;
+      background: linear-gradient(90deg, #71b7e6, #69a6ce, #b98acc, #ee8176, #b98acc, #69a6ce, #9b59b6) no-repeat;
+      background-size: 80% 100%;
+      -webkit-background-clip: text;
+      animation: animateTextBackground 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes animateTextBackground {
+      from {
+        background-position: 0 0;
+      }
+      to {
+        background-position: 100% 0;
+      }
     }
 
     p {
-      font-size: 20px;
-      color: #333;
+      font-size: 30px;
+      color: #555;
     }
   }
 }
